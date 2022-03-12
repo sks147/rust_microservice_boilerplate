@@ -50,3 +50,6 @@ Hello, world!
 ### Run audit
 * `cargo install cargo-audit`
 * `cargo audit`
+
+### How to add new package?
+* Add package name from crates.io to Cargo.toml and run `cargo check`
