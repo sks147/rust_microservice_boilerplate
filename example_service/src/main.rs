@@ -1,17 +1,13 @@
-use actix_web::{get, web, App, HttpServer, Responder};
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 
-#[get("/{id}/{name}/index.html")]
-async fn index(path: web::Path<(u32, String)>) -> impl Responder {
-    let (id, name) = path.into_inner();
-    format!("Hello {}! id:{}", name, id)
+async fn health_check() -> impl Responder {
+    HttpResponse::Ok()
 }
-
-// http://localhost:8080/1/world/index.html
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(index))
-        .bind("127.0.0.1:8080")?
+    HttpServer::new(|| App::new().route("/health_check", web::get().to(health_check)))
+        .bind("127.0.0.1:8000")?
         .run()
         .await
 }
